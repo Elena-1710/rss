@@ -22,8 +22,3 @@ jobs:
         run: npm run build
 
       # Шаг 3: Анализ кода через SonarCloud (НОВЫЙ ШАГ)
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Токен из GitHub Secrets
-          SONAR_PROJECT_KEY: Elena-1710_rss

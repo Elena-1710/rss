@@ -26,4 +26,4 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Токен из GitHub Secrets
-          SONAR_PROJECT_KEY: rss
+          SONAR_PROJECT_KEY: Elena-1710_rss

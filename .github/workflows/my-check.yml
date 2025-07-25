@@ -1,28 +1,29 @@
 name: CI Checks
-on: [push, pull_request]  # Запуск при пуше и в PR
+on: [push, pull_request]
 
 jobs:
   lint-and-build:
     runs-on: ubuntu-latest
     steps:
+      # Шаг 1: Подготовка окружения
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20  # или ваша версия Node.js
+          node-version: 20
 
+      # Шаг 2: Установка зависимостей и сборка
       - name: Install dependencies
         run: npm install
-      - name: SonarQube Scan
-        env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-          -Dsonar.coverage.exclusions=**/* \
-          -Dsonar.cpd.exclusions=**/* \
-          -Dsonar.forceAnalysis=true
 
       - name: Run linter (ESLint)
-        run: npx eslint .  # Проверка стиля кода
+        run: npx eslint .
 
       - name: Build project
         run: npm run build
+
+      # Шаг 3: Анализ кода через SonarCloud (НОВЫЙ ШАГ)
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Токен из GitHub Secrets
+          SONAR_PROJECT_KEY: rss
